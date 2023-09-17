@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .input-primary {
+        @apply border  p-[1px] border-gray-400 rounded-md focus:outline focus:outline-1 focus:outline-blue-500;
+    }
+
+    .label-primary {
+        @apply text-lg text-zinc-500 font-semibold;
+    }
+
+    .btn-primary {
+        @apply bg-teal-600 px-5 py-1 text-lg font-semibold text-white rounded-md;
+    }
+}
