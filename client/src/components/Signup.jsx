@@ -2,40 +2,47 @@ import { useEffect, useState } from 'react'
 import SingleInput from './SingleInput'
 
 function Signup() {
+    // Initialize state to store form input values
     const [formInput, setFormInput] = useState({})
 
 
     useEffect(() => {
-        // console.log(formInput);
+        // Effect hook runs on component mount
+        // It can be used for any side effects, but here it's currently commented out
     }, [])
 
+    // Update the formInput state when input fields change
     const handleInputChange = (e) => {
         setFormInput({
-            ...formInput,
+            ...formInput, 
             [e.target.name]: e.target.value
         })
     }
 
+    // Logic for handling form submission 
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        // Asynchronously send form data to the server
         async function postData() {
+            // Sending POST request using fetch API to '/signup' router
             const response = await fetch('http://localhost:3300/signup', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify(formInput),
-
+                body: JSON.stringify(formInput), // The actual user information such name, email,password etc.
             })
+
             return response.text()
         }
 
+        // Log the response from the server
         postData().then(d=>console.log(d))
-
     }
 
+    // JSX for rendering the signup form
     return (
         <>
             <div className='w-full flex justify-center items-center' id="img-container">
