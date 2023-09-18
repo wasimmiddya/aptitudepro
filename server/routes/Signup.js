@@ -7,20 +7,30 @@ const bcrypt = require('bcryptjs')
 
 const Learner = require('./../models/Learner')
 
-const setHash = (password) => {
-    bcrypt.hash(password,8, (err,hash) =>{
-
-    })
-}
+/* Logic for hashing password */
+async function hashPassword(plaintextPassword) {
+    const saltRounds = 10;
+  
+    try {
+      const hashedPassword = await bcrypt.hash(plaintextPassword, saltRounds);
+      return hashedPassword;
+    } catch (error) {
+      throw new Error('Error hashing password:', error);
+    }
+  }
 
 router.post('/signup', async (req, res) => {
+    res.type('json')
+
+    let flag = false
 
     await mongoose.connect(process.env.URI)
                         .then(()=>console.log('DB connected...'))
                         .catch(error => console.error(error))
 
-    let flag = false
-    let password = await setHash(req.body.password)
+    /* Hashing the password */
+    let password = await hashPassword(req.body.password)
+    console.log("Hashed Password",password);
 
     const learner = new Learner({
         fname: req.body.fname,
@@ -29,7 +39,7 @@ router.post('/signup', async (req, res) => {
         password: password,
         created_on: new Date()
     })
-// password checking 
+
     try {
         await learner.save()
         flag = true
@@ -38,7 +48,16 @@ router.post('/signup', async (req, res) => {
     } finally {
         if(flag) {
             res.status(200)
-            res.send('SignUp successfully...')
+            res.json({
+                status: 'OK',
+                resMessage: 'You have successfully signedup.',
+                data: {
+                    fname: req.body.fname,
+                    lname: req.body.lname,
+                },
+                isLoggedOn: true,
+                logTime: new Date().toLocaleTimeString()
+            })
         } else {
             res.status(401)
             res.send('Failed to signup...')
