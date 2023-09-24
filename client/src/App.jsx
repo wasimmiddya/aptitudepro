@@ -82,6 +82,7 @@ function App() {
       </section>
       <footer className='h-16 bg-teal-700 '>
         {/* Write the footer */}
+        <h2 className='text-2xl'>aptitudepro23@gmail.com</h2>
       </footer>
     </>
   )
