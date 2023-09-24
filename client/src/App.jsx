@@ -81,7 +81,7 @@ function App() {
         <ExamLayout/>
       </section>
       <footer className='h-16 bg-teal-700 '>
-
+        {/* Write the footer */}
       </footer>
     </>
   )
