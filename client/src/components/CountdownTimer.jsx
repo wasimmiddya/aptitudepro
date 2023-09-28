@@ -7,6 +7,8 @@ const CountdownTimer = () => {
     const intervalId = setInterval(() => {
       if (time > 0) {
         setTime(prevTime => prevTime - 1);
+      } else {
+        // autosubmit()
       }
     }, 1000);
 
