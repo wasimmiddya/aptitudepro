@@ -2,15 +2,17 @@ const express = require('express');
 const app = express();
 const cors = require('cors')
 
-const signupRouter = require('./routes/Signup')
+const LearnerRouter = require('./routes/LearnerRouter')
+
+const {PORT} = process.env
 
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-app.use('/',signupRouter)
+app.use('/',LearnerRouter)
 
 
-app.listen(process.env.PORT,() => {
-  console.log('Server is running at http://localhost:3300');
+app.listen(PORT,() => {
+  console.log(`Server is running port ${PORT}`);
 })
