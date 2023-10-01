@@ -9,26 +9,22 @@ function About() {
   const developers = [
     {
       name: 'Wasim Middya',
-      descrption: `Hi there I am Wasim Middya. I'm from India and I'm working as a software engineer in blumberg.
-      I am well skilled in java, javascript, react and python.`,
+      descrption: `Hi there I am Wasim Middya. I am working as a Bankend Engineer.`,
       avater: '/wasim.jpg'
     },
     {
       name: 'Sohan Shaw',
-      descrption: `Hi there I am Sohan Shaw. I'm from India and I'm working as a software engineer in blumberg.
-      I am well skilled in java, javascript, react and python.`,
+      descrption: `Hi there I am Sohan Shaw. I am working as a Frontend Engineer.`,
       avater: '/sohan.png'
     },
     {
       name: 'Zeesan Tarafdar',
-      descrption: `Hi there I am Zeesan Tarafdar. I'm from India and I'm working as a software engineer in blumberg.
-      I am well skilled in java, javascript, react and python.`,
+      descrption: `Hi there I am Zeesan Tarafdar and I am working as a Database Administrator`,
       avater: '/zeesan.jpg'
     },
     {
       name: 'Ujjal Pattra',
-      descrption: `Hi there I am Ujjal Pattra. I'm from India and I'm working as a software engineer in blumberg.
-      I am well skilled in java, javascript, react and python.`,
+      descrption: `Hi there I am Ujjal Pattra and I am working as a service consultent.`,
       avater: '/profile.jpg'
     }
   ]
@@ -37,7 +33,7 @@ function About() {
     <>
       <div className="bg-sky-50 w-full h-full pt-24 grid place-items-center">
         <div>
-          <h1 className="text-center text-3xl font-semibold my-6">About Us</h1>
+          <h1 className="text-center text-3xl font-semibold my-6">Developers</h1>
           <div className="flex justify-center space-x-4">
             {
               developers.map((e, k) => {

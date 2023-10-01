@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import SingleInput from './SingleInput'
+import {useNavigate} from 'react-router-dom'
 
 function Signup() {
     // Initialize state to store form input values
@@ -9,6 +11,7 @@ function Signup() {
         email: '',
         password: ''
     })
+    const navigate = useNavigate()
 
     // Update the formInput state when input fields change
     const handleInputChange = (e) => {
@@ -47,13 +50,18 @@ function Signup() {
             email: '',
             password: ''
         })
-        console.log(formInput);
 
         // Log the response from the server
-        postData().then((res) => {
-            if (res !== undefined) {
-                console.log(res)
+        postData().then(({status}) => {
+            if (status === 'OK') {
+                // handleLogIn(res.status)
+                navigate('/verify')
+            } else {
+                navigate('*')
             }
+        }).catch(() => {
+            navigate('*')
+
         })
     }
 

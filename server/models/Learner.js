@@ -6,7 +6,12 @@ const learnerShema = new Schema({
     lname: String,
     email: String,
     password: String,
-    created_on: Date
-})
+    verified: Boolean,
+    createdAt: Date,
+},
+{
+    versionKey: false
+}
+)
 
 module.exports = mongoose.model('Learner', learnerShema)
