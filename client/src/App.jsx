@@ -14,10 +14,10 @@ import Verification from './components/Verification'
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [email, setEmail] = useState('')
 
-  const handleLoggedIn = ({target:{value}}) => {
-    setIsLoggedIn(value)
+  const handleLoggedIn = (email) => {
+    setEmail(email)
   }
 
   return (
@@ -25,17 +25,17 @@ function App() {
       {/* All the react routers are defined here */}
       <Routes>
         {/* The layout router is the home page of our website */}
-        <Route path='/' element={<Layout />}>
+        <Route path='/' element={<Layout email={email}/>}>
           <Route path='/' element={<Welcome />} />
           <Route path='about' element={<About />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup handleLogIn={handleLoggedIn}/>} />
           {
             // If the user/learner is logged in then this component will be rendered
-            isLoggedIn && <Route path='exam' element={<ExamLayout />} />
+            email && <Route path='exam' element={<ExamLayout />} />
           }
           <Route path='success' element={<Success/>}/>
-          <Route path='verify' element={<Verification/>}/>
+          <Route path='verify' element={<Verification email={email}/>}/>
           <Route path='*' element={<PageNotFound/>}/>
         </Route>
       </Routes>

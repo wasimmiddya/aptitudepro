@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-function Navbar() {
+function Navbar({ email }) {
     const [visible, setVisible] = useState('hidden')
     const toggleHandler = () => {
         if (visible !== 'visible') {
@@ -10,7 +12,7 @@ function Navbar() {
             setVisible('hidden')
         }
     }
-    
+
     return (
         <>
             {/* The navigation bar */}
@@ -31,12 +33,24 @@ function Navbar() {
                         <li>
                             <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='about'>About</Link>
                         </li>
+
+                        {
+                            !email ?
+                        (   <>
+                            <li>
+                                <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='login'>LogIn</Link>
+                            </li>
+                            <li>
+                                <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='signup'>SignUp</Link>
+                            </li>
+                            </>
+                        )
+                        :
                         <li>
-                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='login'>LogIn</Link>
+                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='exam'>Exam</Link>
                         </li>
-                        <li>
-                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='signup'>SignUp</Link>
-                        </li>
+                        }
+
                     </ul>
                 </div>
             </nav>

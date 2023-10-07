@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import { Outlet } from "react-router-dom"
 import Navbar from "./Navbar"
 
 
-function Layout() {
+function Layout({email}) {
     
     return (
         <>
             <header >
-                <Navbar />
+                <Navbar email={email}/>
             </header>
             <section className={`flex-col  h-full w-full md:flex md:flex-row`}>
                 <Outlet />

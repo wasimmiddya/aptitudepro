@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import SingleInput from './SingleInput'
 import {useNavigate} from 'react-router-dom'
+import SingleInput from './SingleInput'
 
-function Signup() {
+function Signup({handleLogIn}) {
     // Initialize state to store form input values
     const [formInput, setFormInput] = useState({
         fname: '',
@@ -20,7 +20,6 @@ function Signup() {
             ...formInput,
             [e.target.name]: e.target.value
         })
-        // console.log(formInput);
     }
 
     // Logic for handling form submission 
@@ -40,7 +39,6 @@ function Signup() {
                 body: JSON.stringify(formInput),
             })
 
-
             return response.json()
         }
 
@@ -52,16 +50,15 @@ function Signup() {
         })
 
         // Log the response from the server
-        postData().then(({status}) => {
-            if (status === 'OK') {
-                // handleLogIn(res.status)
+        postData().then(({status,email}) => {
+            if (status === true) {
+                handleLogIn(email)
                 navigate('/verify')
             } else {
                 navigate('*')
             }
         }).catch(() => {
             navigate('*')
-
         })
     }
 
