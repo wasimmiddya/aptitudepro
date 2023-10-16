@@ -38,7 +38,7 @@ const saveRecord = async (req, res, next) => {
         await VerifyController.saveOTP(otpInfo)
         flag = await learnerService.sendOTP(otpInfo)
     } catch (error) {
-        throw Error("Opps, something went wrong : " + error)
+        console.log(error);
     } finally {
         if (flag) {
             res.status(200)
