@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import SingleInput from './SingleInput'
 
-function Signup({handleLogIn}) {
+function Signup({ handleLogIn }) {
     // Initialize state to store form input values
     const [formInput, setFormInput] = useState({
         fname: '',
@@ -50,7 +50,7 @@ function Signup({handleLogIn}) {
         })
 
         // Log the response from the server
-        postData().then(({status,email}) => {
+        postData().then(({ status, email }) => {
             if (status === true) {
                 handleLogIn(email)
                 navigate('/verify')
@@ -74,7 +74,7 @@ function Signup({handleLogIn}) {
                         <legend className='text-left mx-6 py-2 border-2 rounded-md font-semibold font-montserrat text-slate-500 px-5'>SignUp</legend>
                         <div className='flex flex-col items-center justify-center space-y-4 w-full md:flex-row md:space-x-2 md:space-y-0'>
                             <SingleInput fieldName='fname' fieldType='text' fieldLabel='First Name' inputChange={handleInputChange} inputValue={formInput.fname} />
-                            
+
                             <SingleInput fieldName='lname' fieldType='text' fieldLabel='Last Name' inputChange={handleInputChange} inputValue={formInput.lname} />
                         </div>
                         <div className='my-3'>
@@ -85,6 +85,7 @@ function Signup({handleLogIn}) {
                         </div>
                         <div className='my-6 flex justify-center'>
                             <button className='btn-primary' type="submit">SignUp</button>
+                            
                         </div>
                     </fieldset>
                 </form>

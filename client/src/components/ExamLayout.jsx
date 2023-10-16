@@ -1,16 +1,57 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
 import CountdownTimer from "./CountdownTimer"
 import QestionNo from "./QestionNo"
 import Question from "./Question"
 
 import QuestionSet from "./QuesModel.mjs"
+import BarLoader from "./Tools/BarLoader"
 
 
 
 function ExamLayout() {
     const [currentQuestion, setCurrentQuestion] = useState(0)
+    const [load, setLoad] = useState(true)
 
     const questionNo = Array.from({ length: QuestionSet.questionSet.length }, (v, i) => i)
+
+    useEffect(() => {
+        console.log('mounted');
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        })
+
+        document.addEventListener = ('keydown', (e) => {
+            if (e.key == 123) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.key == 'U') {
+                e.preventDefault();
+            }
+        });
+
+        const loaderId = setTimeout(() => {
+            setLoad(false)
+          }, 10000)
+
+        return () => {
+            console.log('unmounted');
+            document.removeEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            })
+
+            clearTimeout(loaderId)
+        }
+    }, [])
 
     const handleSelected = (value) => {
         QuestionSet.questionSet[currentQuestion].selected = value
@@ -22,7 +63,7 @@ function ExamLayout() {
     }
 
     const handleNextQuestion = () => {
-        if (currentQuestion < QuestionSet.totalQuestions-1) {
+        if (currentQuestion < QuestionSet.totalQuestions - 1) {
             setCurrentQuestion(preQuestion => preQuestion + 1)
         }
     }
@@ -33,7 +74,7 @@ function ExamLayout() {
     }
 
     return (
-        <div className="w-full pt-20  flex">
+        <div className="w-full pt-20  flex select-none" >
             {/* Righ side bar */}
             <div className="w-[20%] bg-slate-100 pt-8">
                 {/* Web camera container */}
@@ -44,7 +85,7 @@ function ExamLayout() {
                 <div className="w-[80%] h-[65%] mx-auto my-auto border-2 border-stone-500 rounded-md mt-4 p-3 grid grid-cols-4 grid-rows-6 gap-2 ">
                     {
                         questionNo.map((e, k) => {
-                            return(<QestionNo key={k} number={e} handleQuestionNo={handleSelectedQuestionNo}/>)
+                            return (<QestionNo key={k} number={e} handleQuestionNo={handleSelectedQuestionNo} />)
                         })
                     }
                 </div>
@@ -53,9 +94,9 @@ function ExamLayout() {
             {/* Exam view port */}
             <div className="w-[60%] pt-12 relative">
                 {/* Actual question */}
-                <Question 
-                    questionData={QuestionSet.questionSet} 
-                    currentQuestion={currentQuestion} 
+                <Question
+                    questionData={QuestionSet.questionSet}
+                    currentQuestion={currentQuestion}
                     optionData={QuestionSet.questionSet[currentQuestion].options}
                     handleSelected={handleSelected}
                     selected={QuestionSet.questionSet[currentQuestion].selected}
@@ -83,6 +124,9 @@ function ExamLayout() {
                     <p className="text-sm">johndoe123@gmail.com</p>
                 </div>
             </div>
+
+            
+            {load && <BarLoader load={load}/>}
         </div>
     )
 }

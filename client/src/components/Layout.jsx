@@ -10,13 +10,13 @@ function Layout({email}) {
             <header >
                 <Navbar email={email}/>
             </header>
-            <section className={`flex-col  h-full w-full md:flex md:flex-row`}>
+            <section className={`flex-col  h-full w-full md:flex md:flex-row `}>
                 <Outlet />
             </section>
-            <footer className='h-16 bg-teal-700 '>
+            <footer className='h-20 bg-teal-800 flex flex-col justify-center'>
                 {/* Write the footer */}
-                <h2 className='text-2xl text-center text-white'>aptitudepro23@gmail.com</h2>
-                <p className="text-center text-white">copyritght all right received ©</p>
+                <h2 className='text-lg text-center text-white font-semibold'>aptitudepro23@gmail.com</h2>
+                <p className="text-center text-white text-xs">copyritght all right received ©</p>
             </footer>
         </>
     )
