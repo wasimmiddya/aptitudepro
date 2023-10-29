@@ -36,19 +36,24 @@ function Navbar({ email }) {
 
                         {
                             !email ?
-                        (   <>
-                            <li>
-                                <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='login'>LogIn</Link>
-                            </li>
-                            <li>
-                                <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='signup'>SignUp</Link>
-                            </li>
-                            </>
-                        )
-                        :
-                        <li>
-                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='exam'>Exam</Link>
-                        </li>
+                                (<>
+                                    <li>
+                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='login'>LogIn</Link>
+                                    </li>
+                                    <li>
+                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='signup'>SignUp</Link>
+                                    </li>
+                                </>
+                                )
+                                :
+                                <>
+                                    <li>
+                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='dashboard'>Dashboard</Link>
+                                    </li>
+                                    <li>
+                                        <span className="hover:font-semibold hover:underline cursor-pointer text-lg">Logout</span>
+                                    </li>
+                                </>
                         }
 
                     </ul>

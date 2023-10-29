@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import LogError from "./Errors/LogError"
+
+import AppContext from "./contexts/AppContext"
 
 function Login() {
     const navigate = useNavigate()
     const [isError, setIsError] = useState(false)
     const [formInput, setFormInput] = useState({email: '', password: ''})
     const [disable, setDisable] = useState(false)
+    const {setEmail, setUser} = useContext(AppContext)
 
     const handleInputChange = ({target:{name,value}}) => {
         setFormInput({...formInput,[name]:value})
@@ -32,16 +35,18 @@ function Login() {
 
         response
         .then(res => res.json())
-        .then((data) => {
-            console.log(data);
-            if (!data.success) {
+        .then(({success, email, user}) => {
+            if (!success) {
                 setIsError(true)
                 setDisable(false)
-                return
+                
+            } else {
+                setTimeout(() => {
+                    setEmail(email)
+                    setUser(user)
+                    navigate('/dashboard')
+                }, 2000)
             }
-            setTimeout(() => {
-                navigate('/dashboard')
-            }, 2000)
         })
         .catch(err => {
             setIsError(true)

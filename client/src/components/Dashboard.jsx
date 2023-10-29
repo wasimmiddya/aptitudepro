@@ -1,6 +1,24 @@
-// import React from 'react'
+import { useContext } from "react"
+import AppContext from "./contexts/AppContext"
+import { useNavigate } from "react-router-dom"
 
 function Dashboard() {
+    const {option} = useContext(AppContext)
+    const navigate = useNavigate()
+
+    const handleSubmitBeginner = () => {
+        option.category = "Standard"
+        option.level = "beginner"
+        navigate('/exam')
+    }
+
+    const handleSubmitMedium = () => {
+        option.category = "Numerical Ability"
+        option.level = "medium"
+        navigate('/exam')
+    }
+
+
     return (
         <div className="pt-26 w-full grid grid-cols-2 place-items-center">
             {/* section-1 */}
@@ -21,14 +39,14 @@ function Dashboard() {
                     {/* Cards container */}
                     <div className="grid grid-cols-2 grid-rows-3 gap-4 px-8 w-[80%] mx-auto">
                         {/* Cards */}
-                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly">
+                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly" onClick={handleSubmitBeginner}>
                             <div className="mr-3">
                                 <h4 className="font-semibold">Beginner</h4>
                                 <p>for freshers</p>
                             </div>
                             <img src="beginner_madel.png" alt="broze-medal" className="w-12"/>
                         </div>
-                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly">
+                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly" onClick={handleSubmitMedium}>
                             <div className="mr-3">
                                 <h4 className="font-semibold">Medium</h4>
                                 <p>for regulars</p>
@@ -63,9 +81,12 @@ function Dashboard() {
                             </div>
                             <img src="result.jpg" alt="broze-medal" className="w-12"/>
                         </div>
+
                     </div>
                 </div>
             </div>
+            {/* {modal && <Categroies closeModal={handleCloseModel}/>} */}
+            
         </div>
     )
 }

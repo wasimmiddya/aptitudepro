@@ -1,8 +1,8 @@
 import  { useState, useEffect } from 'react';
 
 const CountdownTimer = () => {
-  const [time, setTime] = useState(80); // Initial time in seconds (10 minutes)
-
+  const [time, setTime] = useState(25*60); // Initial time in seconds (10 minutes)
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (time > 0) {
@@ -20,7 +20,7 @@ const CountdownTimer = () => {
     const seconds = (time % 60).toString().padStart(2, '0');
 
     return `${minutes}:${seconds}`;
-  };
+  }
 
   return (
     <div className="text-center">

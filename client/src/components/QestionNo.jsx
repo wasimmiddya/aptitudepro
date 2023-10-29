@@ -5,6 +5,8 @@ import { useState } from "react"
 function QestionNo({number, handleQuestionNo}) {
   const [visited, setVisited] = useState(false)
 
+  console.log('Question No.');
+
   const handleSelect = () => {
     setVisited(true)
     handleQuestionNo(number)
@@ -19,4 +21,4 @@ function QestionNo({number, handleQuestionNo}) {
   )
 }
 
-export default QestionNo
+export default QestionNo 

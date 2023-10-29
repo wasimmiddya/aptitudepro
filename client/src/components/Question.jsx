@@ -1,41 +1,40 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
-import {  useState } from "react"
+import {  useContext, useState } from "react"
 
 import React from "react"
+import QuestionContext from "./contexts/QuestionContext"
 
-function Question({ questionData,currentQuestion,optionData,handleSelected}) {
-
+function Question() {
     const [selectedRadio, setSelectedRadio] = useState({})
+    const {currentQuestion, paper} = useContext(QuestionContext)
 
-    const isRadioSelected = (value) => value === selectedRadio['Q'+(currentQuestion+1)]
-
-    const handleRadioChange = ({ target: { name,value } }) => {
-        handleSelected(value)
-        setSelectedRadio({...selectedRadio,[name]:value})
+    const {questionSet} = paper
+    
+    const handleRadioChange = ({ target: { name, value } }) => {
+        setSelectedRadio({ ...selectedRadio, [name]: value })
+        paper.questionSet[currentQuestion].selected = value
     }
 
     return (
         <>
             <div className="px-12">
                 <div>
-                    <h3 className="text-xl font-semibold my-2">Question: {questionData[currentQuestion].questionNo}</h3>
+                    <h3 className="text-xl font-semibold my-2">Question: {questionSet[currentQuestion].questionNo}</h3>
                 </div>
                 <div >
-                    <p className="transition-all">{questionData[currentQuestion].questionBody}</p>
+                    <p className="transition-all">{questionSet[currentQuestion].questionBody}</p>
                 </div>
                 <div className="mt-4">
                     <ul className="space-y-2">
                         {
-                            optionData.map((element, key) =>
-                                <React.Fragment key={key}>
-                                    <li>
-                                        <input type="radio" name={'Q' + (currentQuestion + 1)} value={element} className="text-pink-500 focus:ring-1 focus:ring-pink-500 cursor-pointer" onChange={handleRadioChange} checked={isRadioSelected(element)} />
-                                        <span className="mx-2">{element}</span>
-                                    </li>
-                                </React.Fragment>)
+                            questionSet[currentQuestion].options.map((element, key) =>
+                            <React.Fragment key={key}>
+                                {console.log('option render')}
+                                <li>
+                                    <input type="radio" name={currentQuestion} value={element} className="text-pink-500 focus:ring-1 focus:ring-pink-500 cursor-pointer" onChange={handleRadioChange} checked={element === selectedRadio[currentQuestion]} />
+                                    <span className="mx-2">{element}</span>
+                                </li>
+                            </React.Fragment>)
                         }
-
                     </ul>
                 </div>
             </div>

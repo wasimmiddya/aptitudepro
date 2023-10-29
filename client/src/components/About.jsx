@@ -1,21 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import { useEffect, useState } from "react"
 import Card from "./Card"
-import BarLoader from "./Tools/BarLoader"
 
 function About() {
-  const [load, setLoad] = useState(true)
 
-  useEffect(() => {
-    const loaderId = setTimeout(() => {
-      setLoad(false)
-    }, 10000)
-
-    return () => {
-      clearTimeout(loaderId)
-    }
-  },[])
+  
 
   const developers = [
     {
@@ -40,6 +29,7 @@ function About() {
     }
   ]
 
+
   return (
     <>
       <div className="bg-sky-50 w-full h-full pt-28 grid place-items-center overflow-scroll">
@@ -57,10 +47,8 @@ function About() {
             }
           </div>
         </div>
-
       </div>
 
-      {load && <BarLoader load={load}/>}
     </>
   )
 }

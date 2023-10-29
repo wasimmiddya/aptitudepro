@@ -2,8 +2,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SingleInput from './SingleInput'
+import { useContext } from 'react'
 
-function Signup({ handleLogIn }) {
+import AppContext from './contexts/AppContext'
+
+function Signup() {
     // Initialize state to store form input values
     const [formInput, setFormInput] = useState({
         fname: '',
@@ -11,11 +14,13 @@ function Signup({ handleLogIn }) {
         email: '',
         password: ''
     })
+    
     const navigate = useNavigate()
+    const {setEmail, setUser} = useContext(AppContext)
 
     // Update the formInput state when input fields change
     const handleInputChange = (e) => {
-
+        console.log('signup input handle');
         setFormInput({
             ...formInput,
             [e.target.name]: e.target.value
@@ -25,6 +30,8 @@ function Signup({ handleLogIn }) {
     // Logic for handling form submission 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        console.log('signup submit...');
 
         // Asynchronously send form data to the server
         async function postData() {
@@ -50,9 +57,10 @@ function Signup({ handleLogIn }) {
         })
 
         // Log the response from the server
-        postData().then(({ status, email }) => {
+        postData().then(({ status, email, user }) => {
             if (status === true) {
-                handleLogIn(email)
+                setEmail(email)
+                setUser(user)
                 navigate('/verify')
             } else {
                 navigate('*')

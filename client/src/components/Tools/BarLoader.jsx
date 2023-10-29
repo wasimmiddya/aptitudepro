@@ -1,8 +1,20 @@
 /* eslint-disable react/prop-types */
+import { useContext, useEffect } from 'react'
 import { Bars } from 'react-loader-spinner'
+import AppContext from '../contexts/AppContext'
 
 
-function Spinner({load}) {
+function BarLoader() {
+  const {load, setLoad} = useContext(AppContext)
+
+  useEffect(() => {
+    const loaderID = setTimeout(() => {setLoad(false)},5000)
+
+    return () => {
+      clearTimeout(loaderID)
+    }
+  })
+
   return (
     <>
         <Bars
@@ -20,9 +32,9 @@ function Spinner({load}) {
         wrapperClass=""
         visible={load}
         />
-        <div className='overlay'></div>
+        {load && <div className='overlay'></div>}
     </>
   )
 }
 
-export default Spinner
+export default BarLoader
