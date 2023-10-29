@@ -34,14 +34,14 @@ const login = async (req, res) => {
         // Verify the password
         if (match) {
             // Perform JWT verification
-            const token = jwt.sign({ id: learner._id, email }, 'skey', { expiresIn: '5h' })
+            const token = jwt.sign({ id: learner._id, email, user: `${learner.fname} ${learner.lname}`}, 'skey', { expiresIn: '1h' })
 
             // Sending cookies to client
             return res.status(200).cookie('token', token, {
-                maxAge: 60000 * 5,
+                maxAge: 60000 * 60,
                 httpOnly: true,
                 secure: true
-            }).json({ success: true, message: 'Login successful...', token})
+            }).json({ success: true, message: 'Login successful...', email, user: `${learner.fname} ${learner.lname}`})
         } else {
             return res.status(401).json({ success: false, message: 'Login failed!' })
         }
@@ -50,7 +50,7 @@ const login = async (req, res) => {
         console.log(err)
         res.status(500).json({ success: false, message: 'Opps! something went wrong, please try again.' })
     } finally {
-        mongoose.connection.close()
+        // mongoose.connection.close()
     }
 }
 
