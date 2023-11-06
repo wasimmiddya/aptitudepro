@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import BarChart from "./BarChart"
-import DoughnutChart from "./DoughnutChart"
+import BarChart from "../components/BarChart"
+import DoughnutChart from "../components/DoughnutChart"
 import AppContext from "../contexts/AppContext"
 
 

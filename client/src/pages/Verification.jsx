@@ -1,11 +1,17 @@
 /* eslint-disable react/prop-types */
 // import React from 'react'
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import AppContext from "../contexts/AppContext"
 
-function Verification({email}) {
+function Verification() {
     const [otpInput, setOtpInput] = useState('')
+    const {email, setEmail} = useContext(AppContext)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        
+    }, [email])
 
     const handleInput = ({target: {value}}) => {
         setOtpInput(value)
@@ -32,9 +38,9 @@ function Verification({email}) {
         submitOTP({email: email, otp:otpInput})
             .then(res => {
                 if(res.status === true) {
-                    navigate('/exam')
+                    navigate('/dashboard')
                 } else {
-                    navigate('*')
+                    setEmail(null)
                 }
             })
             .catch(() => navigate('*'))

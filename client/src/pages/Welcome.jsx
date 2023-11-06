@@ -2,9 +2,9 @@
  *  This is welcome page. User will see this page whenever they enter in our website.
  */
 import { useNavigate } from 'react-router-dom'
-import BarLoader from './Tools/BarLoader'
+import BarLoader from '../components/BarLoader'
 import { useContext } from 'react'
-import AppContext from './contexts/AppContext'
+import AppContext from '../contexts/AppContext'
 
 
 function Welcome() {
@@ -21,7 +21,7 @@ function Welcome() {
     <>
       {/* This is the image of welcome page */}
       <div className='w-full flex justify-center items-center' id="img-container">
-        <img className='w-[400px] md:w-[600px] hidden md:inline-block' src="education_imageHD.png" alt="student illustration" />
+        <img className='w-[400px] md:w-[600px] hidden md:inline-block' src="/images/education_imageHD.png" alt="student illustration" />
       </div>
 
       {/* This below code will render the welcome text */}

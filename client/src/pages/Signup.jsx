@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import SingleInput from './SingleInput'
+import SingleInput from '../components/SingleInput'
 import { useContext } from 'react'
 
-import AppContext from './contexts/AppContext'
+import AppContext from '../contexts/AppContext'
+import { Oval } from 'react-loader-spinner'
+import SignError from '../errors/SignError'
 
 function Signup() {
+    const [disable, setDisable] = useState(false)
+    const [isError, setIsError] = useState(false)
     // Initialize state to store form input values
     const [formInput, setFormInput] = useState({
         fname: '',
@@ -35,6 +39,7 @@ function Signup() {
 
         // Asynchronously send form data to the server
         async function postData() {
+            setDisable(true)
             // Sending POST request using fetch API to '/signup' router
             const response = await fetch('http://localhost:3300/signup', {
                 method: 'POST',
@@ -63,18 +68,19 @@ function Signup() {
                 setUser(user)
                 navigate('/verify')
             } else {
-                navigate('*')
+                setIsError(true)
             }
         }).catch(() => {
-            navigate('*')
+            setIsError(true)
         })
     }
+
 
     // JSX for rendering the signup form
     return (
         <>
             <div className='w-full flex justify-center items-center' id="img-container">
-                <img className='w-[400px] md:w-[500px] hidden md:inline-block' src="/Imagination-cuate.png" alt="student illustration" />
+                <img className='w-[400px] md:w-[500px] hidden md:inline-block' src="/images/Imagination-cuate.png" alt="student illustration" />
             </div>
             <div className='h-full w-full grid place-items-center mt-10'>
                 <form className='w-[80%] mx-auto md:w-[60%] h-auto' action="http://localhost:3300/signup" onSubmit={handleSubmit}>
@@ -92,12 +98,28 @@ function Signup() {
                             <SingleInput fieldName={'password'} fieldType={'password'} fieldLabel={'Password'} pholder={'*****'} require={true} inputChange={handleInputChange} inputValue={formInput.password} />
                         </div>
                         <div className='my-6 flex justify-center'>
-                            <button className='btn-primary' type="submit">SignUp</button>
+                            <button className='btn-primary' type="submit" disabled={disable}> {
+                                !disable ? "SignUp":<Oval
+                                height={24}
+                                width={24}
+                                color="#fff"
+                                wrapperStyle={{
+                                    padding: '1px 12px'
+                                }}
+                                wrapperClass=""
+                                visible={true}
+                                ariaLabel='oval-loading'
+                                secondaryColor="#efefef"
+                                strokeWidth={5}
+                                strokeWidthSecondary={8}
+                              />
+                            }</button>
                             
                         </div>
                     </fieldset>
                 </form>
             </div>
+            <SignError open={isError} closeModal={() => setIsError(false)}/>
         </>
     )
 }

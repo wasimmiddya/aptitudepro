@@ -2,15 +2,22 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import Logout from "./modals/Logout"
 
 function Navbar({ email }) {
     const [visible, setVisible] = useState('hidden')
+    const [openModal, setOpenModal] = useState(false)
+
     const toggleHandler = () => {
         if (visible !== 'visible') {
             setVisible('visible')
         } else {
             setVisible('hidden')
         }
+    }
+
+    const handleOpenModal = () => {
+        setOpenModal(true)
     }
 
     return (
@@ -51,7 +58,7 @@ function Navbar({ email }) {
                                         <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='dashboard'>Dashboard</Link>
                                     </li>
                                     <li>
-                                        <span className="hover:font-semibold hover:underline cursor-pointer text-lg">Logout</span>
+                                        <button className="hover:font-semibold hover:underline cursor-pointer text-lg" onClick={handleOpenModal}>Logout</button>
                                     </li>
                                 </>
                         }
@@ -59,6 +66,8 @@ function Navbar({ email }) {
                     </ul>
                 </div>
             </nav>
+
+            {openModal && <Logout closeModal={() => setOpenModal(false)} />}
         </>
     )
 }

@@ -1,11 +1,11 @@
 import {  useContext, useState } from "react"
 
 import React from "react"
-import QuestionContext from "./contexts/QuestionContext"
+import ExamContext from "../contexts/ExamContext"
 
 function Question() {
     const [selectedRadio, setSelectedRadio] = useState({})
-    const {currentQuestion, paper} = useContext(QuestionContext)
+    const {currentQuestion, paper} = useContext(ExamContext)
 
     const {questionSet} = paper
     

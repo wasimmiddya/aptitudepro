@@ -1,8 +1,9 @@
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import LogError from "./Errors/LogError"
+import LogError from "../errors/LogError"
+import { Oval } from "react-loader-spinner"
 
-import AppContext from "./contexts/AppContext"
+import AppContext from "../contexts/AppContext"
 
 function Login() {
     const navigate = useNavigate()
@@ -58,7 +59,7 @@ function Login() {
     return (
         <>
             <div className='w-full flex justify-center items-center' id="img-container">
-                <img className='w-[400px] md:w-[600px] hidden md:inline-block' src="/Creative thinking-bro.png" alt="student illustration" />
+                <img className='w-[400px] md:w-[600px] hidden md:inline-block' src="/images/Creative thinking-bro.png" alt="student illustration" />
             </div>
 
             <div className="w-full md:w-full h-full flex justify-center items-center mt-10">
@@ -74,7 +75,22 @@ function Login() {
                             <input className=" border border-stone-900 rounded-md focus:border-none focus:outline focus:outline-2 focus:outline-teal-700 p-1" type="password" name="password" id="password" required value={formInput?.password} onChange={handleInputChange}/>
                         </div>
                         <div className="my-2">
-                            <button className="px-5 py-1 mt-4 border relative left-[50%] translate-x-[-50%] rounded-md bg-teal-700 hover:bg-teal-800 border-none text-white font-semibold text-lg" type="submit" disabled={disable}>LogIn</button>
+                            <button className="px-5 py-1 mt-4 border relative left-[50%] translate-x-[-50%] rounded-md bg-teal-700 hover:bg-teal-800 border-none text-white font-semibold text-lg" type="submit" disabled={disable}>{
+                                !disable  ? "LogIn":<Oval
+                                height={24}
+                                width={24}
+                                color="#fff"
+                                wrapperStyle={{
+                                    padding: '1px 12px'
+                                }}
+                                wrapperClass=""
+                                visible={true}
+                                ariaLabel='oval-loading'
+                                secondaryColor="#efefef"
+                                strokeWidth={5}
+                                strokeWidthSecondary={8}
+                              />
+                            }</button>
                         </div>
                     </fieldset>
                 </form>
