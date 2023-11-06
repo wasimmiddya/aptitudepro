@@ -15,12 +15,7 @@ app.use(cors({
   credentials: true
 }))
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//   res.header("Access-Control-Allow-Credentials", true);
-//   next();
-// });
+app.use(express.static('views'))
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())

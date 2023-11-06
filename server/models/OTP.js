@@ -6,13 +6,13 @@ const OTPSchema = new Schema({
         require: true,
     },
     otp: {
-        type: Number,
+        type: String,
         require: true
     },
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60 * 3
+        expires: 60 * 2
     }
 })
 

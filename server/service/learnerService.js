@@ -54,7 +54,7 @@ const sendOTP = async ({ email, otp }) => {
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
                 accessToken: accessToken
-            }
+            } 
         })
 
         const mailContent = {
@@ -65,10 +65,9 @@ const sendOTP = async ({ email, otp }) => {
         }
 
         info = await transporter.sendMail(mailContent)
-        console.log(info)
-
     } catch (err) {
         console.error(err)
+        return false
     } finally {
         if (info) 
             return true

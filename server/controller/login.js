@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 
-const { DB_URI } = process.env
+const { DB_URI, SECRET_KEY } = process.env
 
 const learnerSchema = require('./../models/Learner')
 
@@ -27,14 +27,17 @@ const login = async (req, res) => {
         // Fetch data client's data from DB
         const learner = await learnerSchema.findOne({ email, verified: true })
 
-        const match = await bcrypt.compare(password, learner.password)
+        if (!learner) 
+            return res.status(401).json({success: false})
+
+        const match = await bcrypt.compare(password, learner?.password)
         console.log('Password Match ? ', match);
 
 
         // Verify the password
         if (match) {
             // Perform JWT verification
-            const token = jwt.sign({ id: learner._id, email, user: `${learner.fname} ${learner.lname}`}, 'skey', { expiresIn: '1h' })
+            const token = jwt.sign({ id: learner._id, email, user: `${learner.fname} ${learner.lname}`}, SECRET_KEY, { expiresIn: '1h' })
 
             // Sending cookies to client
             return res.status(200).cookie('token', token, {
@@ -49,9 +52,7 @@ const login = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({ success: false, message: 'Opps! something went wrong, please try again.' })
-    } finally {
-        // mongoose.connection.close()
-    }
+    } 
 }
 
 

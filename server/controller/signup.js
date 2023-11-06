@@ -41,13 +41,14 @@ const saveRecord = async (req, res, next) => {
         console.log(error);
     } finally {
         if (flag) {
-            res.status(200)
+            res.status(201)
             res.json({
                status: true,
-               email
+               email,
+               user: `${fname} ${lname}`
             })
         } else {
-            res.status(400).json({
+            res.status(401).json({
                 status: false,
                 msg: 'Sorry, something went wrong! please try again later.'
             })
