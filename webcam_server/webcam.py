@@ -36,7 +36,7 @@ def video_feed():
 @app.route('/check')
 def check():
     global cap
-    cap = cv.VideoCapture(0)
+    # cap = cv.VideoCapture(0)
 
     count = 0
     face = 0
@@ -61,7 +61,7 @@ def check():
             
             if count >= 6:
                     break
-    cap.release()
+    # cap.release()
     return jsonify({"msg":"VIOLENCE"})  
           
 
