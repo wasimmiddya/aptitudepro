@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import Logout from "./modals/Logout"
 
 function Navbar({ email }) {
@@ -35,27 +35,27 @@ function Navbar({ email }) {
                 <div className={`${visible} transition-all md:block`}>
                     <ul className='flex-col space-y-1 md:space-x-12 md:space-y-0 text-center my-4 md:flex md:flex-row'>
                         <li>
-                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='/'>Home</Link>
+                            <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='/'>Home</NavLink>
                         </li>
                         <li>
-                            <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='about'>About</Link>
+                            <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='about'>About</NavLink>
                         </li>
 
                         {
                             !email ?
                                 (<>
                                     <li>
-                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='login'>LogIn</Link>
+                                        <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='login'>LogIn</NavLink>
                                     </li>
                                     <li>
-                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='signup'>SignUp</Link>
+                                        <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='signup'>SignUp</NavLink>
                                     </li>
                                 </>
                                 )
                                 :
                                 <>
                                     <li>
-                                        <Link className="hover:underline hover:font-semibold text-sm md:text-lg" to='dashboard'>Dashboard</Link>
+                                        <NavLink className="hover:underline hover:font-semibold text-sm md:text-lg" to='dashboard'>Dashboard</NavLink>
                                     </li>
                                     <li>
                                         <button className="hover:font-semibold hover:underline cursor-pointer text-lg" onClick={handleOpenModal}>Logout</button>

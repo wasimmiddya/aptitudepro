@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import React, { useEffect, Suspense, useContext } from "react";
 import "./App.css";
-
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
