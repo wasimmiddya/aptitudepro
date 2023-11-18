@@ -28,7 +28,7 @@ const evaluate = (req, res) => {
                 case 'NA':
                     report.numerical += marks
                     break;
-                case 'VA':
+                case 'GR':
                     report.varbal += marks
                     break;
                 case 'LR':

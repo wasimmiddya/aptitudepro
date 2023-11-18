@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Bars } from 'react-loader-spinner'
 import AppContext from '../contexts/AppContext'
 
 
 function BarLoader() {
-  const {load, setLoad} = useContext(AppContext)
+  const [load, setLoad] = useState(true)
 
   useEffect(() => {
-    const loaderID = setTimeout(() => {setLoad(false)},5000)
+    // setLoad(false)
+    const loaderID = setTimeout(() => {setLoad(false)},3500)
 
     return () => {
       clearTimeout(loaderID)

@@ -19,7 +19,7 @@ function Progressboard() {
   return (
     report && 
     <div className="w-full pt-28 text-center ">
-      <h2 className="text-4xl font-semibold mb-2">Your Progressive Report</h2>
+      <h2 className="text-4xl font-semibold mb-2">Your Progress Report</h2>
       <div className="flex justify-evenly text-xl my-8 font-semibold">
         <div>
           <label htmlFor="marks">Marks : </label>
@@ -44,7 +44,7 @@ function Progressboard() {
             <BarChart />
           </div>
           <div className="w-[18%] text-sm text-center my-2 font-semibold">
-            <h4>Categorical Question Attemption Analysis</h4>
+            <h4>Categorical Marks Analysis</h4>
             <DoughnutChart />
           </div>
       </div>

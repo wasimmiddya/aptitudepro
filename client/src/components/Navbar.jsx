@@ -1,12 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from "react"
-import { Link, NavLink } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
 import Logout from "./modals/Logout"
+import AppContext from "../contexts/AppContext"
 
 function Navbar({ email }) {
     const [visible, setVisible] = useState('hidden')
     const [openModal, setOpenModal] = useState(false)
+    const { inExam } = useContext(AppContext)
+
+    useEffect(() => {
+        console.log('inExam :: ', inExam);
+    }, [inExam])
 
     const toggleHandler = () => {
         if (visible !== 'visible') {
@@ -33,37 +39,42 @@ function Navbar({ email }) {
                 </div>
                 {/* Navigation link container */}
                 <div className={`${visible} transition-all md:block`}>
-                    <ul className='flex-col space-y-1 md:space-x-12 md:space-y-0 text-center my-4 md:flex md:flex-row'>
-                        <li>
-                            <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='/'>Home</NavLink>
-                        </li>
-                        <li>
-                            <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='about'>About</NavLink>
-                        </li>
+                    {
+                        !inExam ?
+                            (<ul className='flex-col space-y-1 md:space-x-12 md:space-y-0 text-center my-4 md:flex md:flex-row'>
+                                <li>
+                                    <NavLink className={({ isActive }) => `hover:underline ${isActive ? 'font-bold' : ''} hover:font-semibold text-sm md:text-lg`} to='/'>Home</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className={({ isActive }) => `hover:underline ${isActive ? 'font-bold' : ''} hover:font-semibold text-sm md:text-lg`} to='about'>About</NavLink>
+                                </li>
 
-                        {
-                            !email ?
-                                (<>
-                                    <li>
-                                        <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='login'>LogIn</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink className={({isActive}) => `hover:underline ${isActive ? 'font-bold':''} hover:font-semibold text-sm md:text-lg`} to='signup'>SignUp</NavLink>
-                                    </li>
-                                </>
-                                )
-                                :
-                                <>
-                                    <li>
-                                        <NavLink className="hover:underline hover:font-semibold text-sm md:text-lg" to='dashboard'>Dashboard</NavLink>
-                                    </li>
-                                    <li>
-                                        <button className="hover:font-semibold hover:underline cursor-pointer text-lg" onClick={handleOpenModal}>Logout</button>
-                                    </li>
-                                </>
-                        }
+                                {
+                                    !email ?
+                                        (<>
+                                            <li>
+                                                <NavLink className={({ isActive }) => `hover:underline ${isActive ? 'font-bold' : ''} hover:font-semibold text-sm md:text-lg`} to='login'>LogIn</NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink className={({ isActive }) => `hover:underline ${isActive ? 'font-bold' : ''} hover:font-semibold text-sm md:text-lg`} to='signup'>SignUp</NavLink>
+                                            </li>
+                                        </>
+                                        )
+                                        :
+                                        (<>
+                                            <li>
+                                                <NavLink className={({ isActive }) => `hover:underline ${isActive ? 'font-bold' : ''} hover:font-semibold text-sm md:text-lg`} to='dashboard'>Dashboard</NavLink>
+                                            </li>
+                                            <li>
+                                                <button className="hover:font-semibold hover:underline cursor-pointer text-lg" onClick={handleOpenModal}>Logout</button>
+                                            </li>
+                                        </>)
+                                }
 
-                    </ul>
+                            </ul>) :
+                            <h3 className="text-xl py-4 font-cursive">Your are in the exam room</h3>
+                    }
+
                 </div>
             </nav>
 

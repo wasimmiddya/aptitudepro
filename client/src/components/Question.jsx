@@ -28,7 +28,6 @@ function Question() {
                         {
                             questionSet[currentQuestion].options.map((element, key) =>
                             <React.Fragment key={key}>
-                                {console.log('option render')}
                                 <li>
                                     <input type="radio" name={currentQuestion} value={element} className="text-pink-500 focus:ring-1 focus:ring-pink-500 cursor-pointer" onChange={handleRadioChange} checked={element === selectedRadio[currentQuestion]} />
                                     <span className="mx-2">{element}</span>

@@ -21,7 +21,7 @@ function DoughnutChart() {
         datasets: [
             {
                 label: 'Category Marks',
-                data: [numerical, varbal, reasoning, genaral],
+                data: [numerical, reasoning, varbal, genaral],
                 backgroundColor: ['#059bff', '#ffc846', '#eb4034', '#fe6434']
             }
         ]

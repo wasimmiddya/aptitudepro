@@ -1,14 +1,24 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import AppContext from "../contexts/AppContext"
 import { useNavigate } from "react-router-dom"
 
 function Dashboard() {
-    const {option, email} = useContext(AppContext)
+    const { option, email } = useContext(AppContext)
     const navigate = useNavigate()
+    const [load, setLoad] = useState(true)
 
     useEffect(() => {
         if (!email) {
             navigate('/')
+        }
+    })
+
+    useEffect(() => {
+        const loadTimeId = setTimeout(() => {
+            setLoad(false)
+        }, 5000)
+        return () => {
+            clearTimeout(loadTimeId)
         }
     })
 
@@ -19,8 +29,14 @@ function Dashboard() {
     }
 
     const handleSubmitMedium = () => {
-        option.category = "Numerical Ability"
+        option.category = "Standard"
         option.level = "medium"
+        navigate('/exam')
+    }
+
+    const handleSubmitDifficult = () => {
+        option.category = "Standard"
+        option.level = "difficult"
         navigate('/exam')
     }
 
@@ -43,8 +59,12 @@ function Dashboard() {
                         <h2 className="text-center text-3xl font-semibold text-slate-700 mb-7">Start your <span className="text-pink-500">Test Exam</span></h2>
                     </div>
                     {/* Cards container */}
-                    <div className="grid grid-cols-2 grid-rows-3 gap-4 px-8 w-[80%] mx-auto">
+
                         {/* Cards */}
+                    {
+                        !load ?
+                        <>
+                    <div className="grid grid-cols-2 grid-rows-3 gap-4 px-8 w-[80%] mx-auto">
                         <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly" onClick={handleSubmitBeginner}>
                             <div className="mr-3">
                                 <h4 className="font-semibold">Beginner</h4>
@@ -59,7 +79,7 @@ function Dashboard() {
                             </div>
                             <img src="/images/medium_madel.png" alt="silver-medal" className="w-12"/>
                         </div>
-                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly">
+                        <div className="flex p-3 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 justify-evenly" onClick={handleSubmitDifficult}>
                             <div className="mr-3">
                                 <h4 className="font-semibold">Pro</h4>
                                 <p>for interviews</p>
@@ -87,11 +107,16 @@ function Dashboard() {
                             </div>
                             <img src="/images/result.jpg" alt="broze-medal" className="w-12"/>
                         </div>
-
                     </div>
+                        </>
+                        :
+                        <div className="w-full flex justify-center">
+                            <p className="text-center text-lg animate-pulse">Loading...</p>
+                        </div>
+                        }
                 </div>
             </div>
-            {/* {modal && <Categroies closeModal={handleCloseModel}/>} */}
+            
             
         </div>
     )

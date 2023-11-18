@@ -17,31 +17,44 @@ import Submit from "../components/modals/Submit";
 import VioletMsg from "../components/modals/VioleteMsg";
 import ExamContext from "../contexts/ExamContext";
 
+
 function ExamLayout() {
   const [submit, setSubmit] = useState(false);
-  const { email, user, option } = useContext(AppContext);
+  const { email, user, option, setInExam } = useContext(AppContext);
   const { paper, setPaper, currentQuestion, setCurrentQuestion } =
     useContext(ExamContext);
   const [violet, setViolet] = useState(false);
-  const [video, setVideo] = useState("http://127.0.0.1:5000/video_feed");
+  const [video, setVideo] = useState(null);
+  const [load, setLoad] = useState(true)
 
   let flag = true;
   let rels = false;
 
+  // For releasing the resources
   useEffect(() => {
-    console.log("Created");
+    if (rels) {
+      console.log("Webcam hold");
+      setVideo("http://127.0.0.1:5000/video_feed");
+      setInExam(true)
+    }
 
     return () => {
       if (rels) {
         fetch("http://127.0.0.1:5000/release")
           .then((res) => res.text())
           .catch((err) => console.log(err));
-        // setPaper(null);
+        setPaper(null);
+        setVideo(null)
+        setInExam(false)
+        console.log("Webcam released");
+
       }
+
       rels = true;
     };
   }, []);
 
+  // For checking violation
   useEffect(() => {
     fetch("http://127.0.0.1:5000/check", {
       method: "GET",
@@ -52,15 +65,16 @@ function ExamLayout() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.msg === "VIOLENCE") {
           setViolet(true);
         }
       });
   }, [violet]);
 
+
   // Effect for webcamera and face detectiion
   useEffect(() => {
+
     const handleContextMenu = (e) => {
       e.preventDefault();
     };
@@ -100,18 +114,24 @@ function ExamLayout() {
           body: JSON.stringify(option),
         });
 
-        setVideo("http://127.0.0.1:5000/video_feed");
+        
         response
           .json()
-          .then((data) => setPaper(data))
+          .then((data) => {
+            setPaper(data)
+          })
           .catch((err) => console.error(err));
       }
     }
 
     getExamPaper();
 
+    const loaderTimeId = setTimeout(() => {
+      setLoad(false)
+    }, 7000)
+
     return () => {
-      console.log("destroyed context menu");
+      clearTimeout(loaderTimeId)
     };
   }, []);
 
@@ -156,12 +176,12 @@ function ExamLayout() {
         {/* Righ side bar */}
         <div className="w-[20%] bg-slate-100 pt-8">
           {/* Web camera container */}
-          <div className="w-[60%] h-28  mx-auto rounded-md text-center text-white">
-            <img
+          <div className="w-[60%] h-28  mx-auto rounded-md text-center text-black">
+            {video && <img
               src={video}
               alt="webcam"
               className="w-full h-full rounded-lg border-4 border-red-400"
-            />
+            />}
           </div>
           {/* Question No. plate container */}
           <div className="w-[80%] h-[65%] mx-auto my-auto border-2 border-stone-500 rounded-md mt-4 p-3 grid grid-cols-4 grid-rows-6 gap-2 ">
@@ -179,7 +199,7 @@ function ExamLayout() {
               </h3>
             }
           >
-            {paper && <Question />}
+            {(paper && !load) ? <Question /> : <p className="text-center text-xl pt-5">Loading questions...</p>}
           </Suspense>
 
           {/* Footer buttons */}
@@ -206,7 +226,7 @@ function ExamLayout() {
         <div className="w-[20%] bg-slate-100 pt-12">
           {/* Timer container */}
           <div className="text-center">
-            <CountdownTimer />
+            {!load ? <CountdownTimer />:<p>Loading...</p>}
           </div>
           {/* Profile container */}
           <div className="flex items-center flex-col mt-10">
@@ -228,8 +248,9 @@ function ExamLayout() {
           </div>
         </div>
       </div>
+      {/* <BarLoader/> */}
       {paper && submit && <Submit closeModal={() => setSubmit(false)} />}
-      {paper && violet && <VioletMsg closeModal={() => setViolet(false)} />}
+      {paper && violet && !load && <VioletMsg closeModal={() => setViolet(false)} />}
     </>
   );
 }

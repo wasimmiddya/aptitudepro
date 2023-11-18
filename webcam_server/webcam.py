@@ -3,9 +3,10 @@ from flask import Flask, Response,jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins='http://localhost:5173')
+CORS(app, origins=['http://localhost:5173','http://127.0.0.1:5500'])
 
 # Access the webcam
+global cap
 cap = cv.VideoCapture(0)
 
 classifier = cv.CascadeClassifier('./haarcascade_frontalface_default.xml')
@@ -23,8 +24,7 @@ def generate_frames():
         else:
             ret, buffer = cv.imencode('.jpg', frame)
             frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+            yield (b'--frame\r\n'b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/video_feed')
 def video_feed():
@@ -61,7 +61,7 @@ def check():
             
             if count >= 6:
                     break
-    # cap.release()
+
     return jsonify({"msg":"VIOLENCE"})  
           
 
