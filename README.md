@@ -9,6 +9,11 @@ This is an online aptitude test preparation web application designed for our col
 
 
 ## Project set up::
+Clone the repository by using the following command
+```shell
+    git clone https://github.com/wasimmiddya/aptitudepro.git
+```
+After cloning the repository you will see -
 The project has 3 parts frontend(i.e client), backend(i.e server) and a service called webcam_server(i.e it serves the AI related task, in this case it is a flask server that accept request and send video stream and violation message.
 
 1. frontend set up
