@@ -8,7 +8,7 @@ This is an online aptitude test preparation web application designed for our col
 4. Wasim Raja Middya
 
 
-## Project set up::
+## Project set up guide::
 Clone the repository by using the following command
 ```shell
     git clone https://github.com/wasimmiddya/aptitudepro.git
