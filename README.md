@@ -12,7 +12,7 @@ This is an online aptitude test preparation web application designed for our col
 The project has 3 parts frontend(i.e client), backend(i.e server) and a service called webcam_server(i.e it serves the AI related task, in this case it is a flask server that accept request and send video stream and violation message.
 
 1. frontend set up
-    - Go to the client folder ```shell cd client ```
+    - Go to the client folder ```bash cd client ```
     - Run either ```shell npm install``` or ```shell yarn ``` command to install the dependancies and packages
 
 2. backend set up
